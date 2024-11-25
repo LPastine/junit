@@ -7,6 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -18,6 +19,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Equals and Not Equals")
+    @Order(1)
     void testEqualsAndNotEquals() {
 
         assertEquals(6, demoUtils.add(2, 4), "2+4 must be 6");
@@ -26,6 +28,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Null and Not Null")
+    @Order(2)
     void testNullAndNotNull() {
 
         String str1 = null;
@@ -37,6 +40,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Same and Not Same")
+    @Order(3)
     void testSameAndNotSame() {
         String str = "luv2code";
 
@@ -46,6 +50,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("True and False")
+    @Order(4)
     void testTrueFalse() {
         int gradeOne = 10;
         int gradeTwo = 5;
@@ -56,6 +61,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Array Equals")
+    @Order(5)
     void testArrayEquals() {
         String[] stringArray = {"A", "B", "C"};
 
@@ -64,6 +70,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Iterable Equals")
+    @Order(6)
     void testIterableEquals() {
         List<String> theList = List.of("luv", "2", "code");
         assertIterableEquals(theList, demoUtils.getAcademyInList(), "Expected list should be the same as actual list");
@@ -71,6 +78,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Lines Match")
+    @Order(7)
     void testLinesMatch() {
         List<String> theList = List.of("luv", "2", "code");
         assertLinesMatch(theList, demoUtils.getAcademyInList(), "Lines should match");
@@ -78,6 +86,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Throws and Does Not Throw")
+    @Order(8)
     void testThrowsAndDoesNotThrow() {
         assertThrows(Exception.class, () -> { demoUtils.throwException(-1); }, "Should throw exception");
         assertDoesNotThrow(() -> { demoUtils.throwException(5); }, "Should throw exception");
@@ -85,6 +94,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Timeout")
+    @Order(9)
     void testTimeOut() {
         assertTimeoutPreemptively(Duration.ofSeconds(3), () -> { demoUtils.checkTimeout(); }, "Method should execute in 3 seconds");
     }
