@@ -99,6 +99,13 @@ public class DemoUtilsTest {
         assertTimeoutPreemptively(Duration.ofSeconds(3), () -> { demoUtils.checkTimeout(); }, "Method should execute in 3 seconds");
     }
 
+    @Test
+    @DisplayName("Multiply")
+    @Order(10)
+    void testMultiply() {
+        assertEquals(12, demoUtils.multiply(4, 3), "4*3 must be 12");
+    }
+
 //    @AfterEach
 //    void tearDownAfterEach() {
 //        System.out.println("Running @AfterEach");
