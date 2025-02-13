@@ -2,9 +2,13 @@ package com.luv2code.junitdemo;
 
 import org.junit.jupiter.api.*;
 
+import java.time.Duration;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+//@DisplayNameGeneration(DisplayNameGenerator.Simple.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DemoUtilsTest {
     DemoUtils demoUtils;
 
@@ -15,7 +19,8 @@ class DemoUtilsTest {
     }
 
     @Test
-    // @DisplayName("Equals and Not Equals")
+    @DisplayName("Equals and Not Equals")
+    @Order(1)
     void testEqualsAndNotEquals() {
         System.out.println("Running test: testEqualsAndNotEquals");
 
@@ -24,7 +29,8 @@ class DemoUtilsTest {
     }
 
     @Test
-    // @DisplayName("Not and Not Null")
+    @DisplayName("Not and Not Null")
+    @Order(0)
     void testNullAndNotNull() {
         System.out.println("Running test: testNullAndNotNull");
 
@@ -33,6 +39,70 @@ class DemoUtilsTest {
 
         assertNull(demoUtils.checkNull(str1), "Object should be null");
         assertNotNull(demoUtils.checkNull(str2), "Object should not be null");
+    }
+
+    @DisplayName("Same and Not Same")
+    @Test
+    void testSameAndNotSame() {
+        String str = "luv2code";
+
+        assertSame(demoUtils.getAcademy(), demoUtils.getAcademyDuplicate(), "The objects should refer to the same object");
+        assertNotSame(str, demoUtils.getAcademy(), "Objects should not refer to the same object");
+    }
+
+    @DisplayName("True and False")
+    @Order(30)
+    @Test
+    void testTrueFalse() {
+        int gradeOne = 10;
+        int gradeTwo = 5;
+
+        assertTrue(demoUtils.isGreater(gradeOne, gradeTwo), "This should return true");
+        assertFalse(demoUtils.isGreater(gradeTwo, gradeOne), "This should return false");
+    }
+
+    @DisplayName("Array Equals")
+    @Test
+    void testArrayEquals() {
+        String[] stringArray = {"A", "B", "C"};
+
+        assertArrayEquals(stringArray, demoUtils.getFirstThreeLettersOfAlphabet(), "Arrays should be the same");
+    }
+
+    @DisplayName("Iterable Equals")
+    @Test
+    void testIterableEquals() {
+        List<String> theList = List.of("luv", "2", "code");
+        assertIterableEquals(theList, demoUtils.getAcademyInList(), "Expected list should be the same as the actual list");
+    }
+
+    @DisplayName("Lines Match")
+    @Order(50)
+    @Test
+    void testLinesMatch() {
+        List<String> theList = List.of("luv", "2", "code");
+
+        assertLinesMatch(theList, demoUtils.getAcademyInList(), "Lines should match");
+    }
+
+    @DisplayName("Throws and Not Throw")
+    @Test
+    void testThrowsAndDoesNotThrow() {
+        assertThrows(Exception.class, () -> { demoUtils.throwException(-1); }, "Should throw exception");
+
+        assertDoesNotThrow(() -> { demoUtils.throwException(5); }, "Should not throw exception");
+    }
+
+    @DisplayName("Timeout")
+    @Test
+    void testTimeout() {
+        assertTimeoutPreemptively(Duration.ofSeconds(3), () -> { demoUtils.checkTimeout(); }, "Method should execute in 3 seconds");
+    }
+
+    @DisplayName("Multiply")
+    @Test
+    void testMultiply() {
+        assertEquals(12, demoUtils.multiply(4, 3), "4*3 must be 12");
     }
 
     /*
