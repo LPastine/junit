@@ -78,7 +78,7 @@ public class StudentAndGradeServiceTest {
             collegeStudents.add(collegeStudent);
         }
 
-        assertEquals(1, collegeStudents.size());
+        assertEquals(5, collegeStudents.size());
     }
 
     @AfterEach
