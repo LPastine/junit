@@ -15,7 +15,7 @@
 	<version>1.0.0</version>
 
 	<properties>
-		<java.version>23</java.version>
+		<java.version>17</java.version>
 		<argLine></argLine>
 	</properties>
 
@@ -23,6 +23,10 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
 		</dependency>
 	</dependencies>
 

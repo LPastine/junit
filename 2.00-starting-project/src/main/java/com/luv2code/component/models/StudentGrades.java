@@ -2,12 +2,13 @@ package com.luv2code.component.models;
 
 import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
 @Component
-public class StudentGrades {
+public class StudentGrades implements Serializable {
 
     List<Double> mathGradeResults;
     /*

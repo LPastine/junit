@@ -1,6 +1,8 @@
 package com.luv2code.component.models;
 
-public class CollegeStudent implements Student {
+import java.io.Serializable;
+
+public class CollegeStudent implements Student, Serializable {
     private String firstname;
     private String lastname;
     private String emailAddress;
