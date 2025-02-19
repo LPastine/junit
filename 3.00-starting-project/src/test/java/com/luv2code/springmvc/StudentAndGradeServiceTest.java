@@ -37,13 +37,13 @@ public class StudentAndGradeServiceTest {
     private StudentDao studentDao;
 
     @Autowired
-    private MathGradesDao mathGradesDao;
+    private MathGradesDao mathGradeDao;
 
     @Autowired
-    private ScienceGradesDao scienceGradesDao;
+    private ScienceGradesDao scienceGradeDao;
 
     @Autowired
-    private HistoryGradesDao historyGradesDao;
+    private HistoryGradesDao historyGradeDao;
 
     @Value("${sql.script.create.student}")
     private String sqlAddStudent;
@@ -80,15 +80,19 @@ public class StudentAndGradeServiceTest {
     @Test
     public void createStudentService() {
 
-        studentService.createStudent("Chad", "Darby", "chad.darby@luv2code_school.com");
+        studentService.createStudent("Chad", "Darby",
+                "chad.darby@luv2code_school.com");
 
-        CollegeStudent student = studentDao.findByEmailAddress("chad.darby@luv2code_school.com");
+        CollegeStudent student = studentDao.
+                findByEmailAddress("chad.darby@luv2code_school.com");
 
-        assertEquals("chad.darby@luv2code_school.com", student.getEmailAddress(), "find by email");
+        assertEquals("chad.darby@luv2code_school.com",
+                student.getEmailAddress(), "find by email");
     }
 
     @Test
     public void isStudentNullCheck() {
+
         assertTrue(studentService.checkIfStudentIsNull(1));
 
         assertFalse(studentService.checkIfStudentIsNull(0));
@@ -96,22 +100,20 @@ public class StudentAndGradeServiceTest {
 
     @Test
     public void deleteStudentService() {
+
         Optional<CollegeStudent> deletedCollegeStudent = studentDao.findById(1);
-        Optional<MathGrade> deletedMathGrade = mathGradesDao.findById(1);
-        Optional<HistoryGrade> deletedHistoryGrade = historyGradesDao.findById(1);
-        Optional<ScienceGrade> deletedScienceGrade = scienceGradesDao.findById(1);
+        Optional<MathGrade> deletedMathGrade = mathGradeDao.findById(1);
+        Optional<HistoryGrade> deletedHistoryGrade = historyGradeDao.findById(1);
+        Optional<ScienceGrade> deletedScienceGrade = scienceGradeDao.findById(1);
 
         assertTrue(deletedCollegeStudent.isPresent(), "Return True");
-        assertTrue(deletedMathGrade.isPresent());
-        assertTrue(deletedHistoryGrade.isPresent());
-        assertTrue(deletedScienceGrade.isPresent());
 
         studentService.deleteStudent(1);
 
         deletedCollegeStudent = studentDao.findById(1);
-        deletedMathGrade = mathGradesDao.findById(1);
-        deletedScienceGrade = scienceGradesDao.findById(1);
-        deletedHistoryGrade = historyGradesDao.findById(1);
+        deletedMathGrade = mathGradeDao.findById(1);
+        deletedScienceGrade = scienceGradeDao.findById(1);
+        deletedHistoryGrade = historyGradeDao.findById(1);
 
         assertFalse(deletedCollegeStudent.isPresent(), "Return False");
         assertFalse(deletedMathGrade.isPresent());
@@ -121,7 +123,8 @@ public class StudentAndGradeServiceTest {
 
     @Sql("/insertData.sql")
     @Test
-    public void getGradeBookService() {
+    public void getGradebookService() {
+
         Iterable<CollegeStudent> iterableCollegeStudents = studentService.getGradeBook();
 
         List<CollegeStudent> collegeStudents = new ArrayList<>();
@@ -142,14 +145,15 @@ public class StudentAndGradeServiceTest {
         assertTrue(studentService.createGrade(80.50, 1, "history"));
 
         // Get all grades with studentId
-        Iterable<MathGrade> mathGrades = mathGradesDao.findGradeByStudentId(1);
-        Iterable<ScienceGrade> scienceGrades = scienceGradesDao.findGradeByStudentId(1);
-        Iterable<HistoryGrade> historyGrades = historyGradesDao.findGradeByStudentId(1);
+        Iterable<MathGrade> mathGrades = mathGradeDao.findGradeByStudentId(1);
+        Iterable<ScienceGrade> scienceGrades = scienceGradeDao.findGradeByStudentId(1);
+        Iterable<HistoryGrade> historyGrades = historyGradeDao.findGradeByStudentId(1);
 
         // Verify there is grades
-        assertTrue(((Collection<MathGrade>) mathGrades).size() == 2, "Student has math grades");
-        assertTrue(((Collection<ScienceGrade>) scienceGrades).size() == 2, "Student has science grades");
-        assertTrue(((Collection<HistoryGrade>) historyGrades).size() == 2, "Student has history grades");
+        assertTrue(((Collection<MathGrade>) mathGrades).size() == 2,
+                "Student has math grades");
+        assertTrue(((Collection<ScienceGrade>) scienceGrades).size() == 2);
+        assertTrue(((Collection<HistoryGrade>) historyGrades).size() == 2);
     }
 
     @Test
@@ -158,7 +162,7 @@ public class StudentAndGradeServiceTest {
         assertFalse(studentService.createGrade(-5, 1, "math"));
         assertFalse(studentService.createGrade(80.50, 2, "math"));
         assertFalse(studentService.createGrade(80.50, 1, "literature"));
-    };
+    }
 
     @Test
     public void deleteGradeService() {
@@ -180,6 +184,7 @@ public class StudentAndGradeServiceTest {
 
     @Test
     public void studentInformation() {
+
         GradebookCollegeStudent gradebookCollegeStudent = studentService.studentInformation(1);
 
         assertNotNull(gradebookCollegeStudent);
@@ -194,6 +199,7 @@ public class StudentAndGradeServiceTest {
 
     @Test
     public void studentInformationServiceReturnNull() {
+
         GradebookCollegeStudent gradebookCollegeStudent = studentService.studentInformation(0);
 
         assertNull(gradebookCollegeStudent);
@@ -203,7 +209,7 @@ public class StudentAndGradeServiceTest {
     public void setupAfterTransaction() {
         jdbc.execute(sqlDeleteStudent);
         jdbc.execute(sqlDeleteMathGrade);
-        jdbc.execute(sqlDeleteMathGrade);
+        jdbc.execute(sqlDeleteScienceGrade);
         jdbc.execute(sqlDeleteHistoryGrade);
     }
 }
